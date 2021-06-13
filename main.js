@@ -229,7 +229,7 @@ event.on('chat-update', async(msg) =>{
                 const stream = fs.createReadStream(file);
                 const form = new FormData();
                 form.append('img', stream);
-                const res = await requests('http://hujanapi.xyz/api/image2url?apikey='+nwhrYGIgbI1UM2E, { method: 'POST', body: form })
+                const res = await requests('http://hujanapi.xyz/api/image2url?apikey='+APIKUY, { method: 'POST', body: form })
                 const ret =  await res.json()
                 wa.sendMessage(to, ret.result.url)
                 fs.unlinkSync(file)
@@ -275,7 +275,7 @@ event.on('chat-update', async(msg) =>{
                 wa.sendReply(to, "Success Change Picture Profile")
                 fs.unlinkSync(file)
                 printLogs(msg)
-            } else if (cmd == "👀"){
+            } else if (cmd == "to hidetag"){
                 msg.message = msg.quoted
                 const file = await event.downloadAndSaveMediaMessage(msg, msg_id)
                 wa.hideTagImage(to, file)
@@ -298,7 +298,7 @@ event.on('chat-update', async(msg) =>{
         } else if (cmd == "to sscode"){
             if (Object.keys(msg.quoted)[0] === "conversation"){
                 xtext = msg.quoted.conversation
-                const code = await requests('http://hujanapi.xyz/api/sscode?query='+xtext+'&apikey='+nwhrYGIgbI1UM2E)
+                const code = await requests('http://hujanapi.xyz/api/sscode?query='+xtext+'&apikey='+APIKUY)
                 const mat = await code.json()
                 wa.sendMediaURL(to,mat.result)
                 printLogs(msg)
@@ -310,7 +310,7 @@ event.on('chat-update', async(msg) =>{
                 const stream = fs.createReadStream(file);
                 const form = new FormData();
                 form.append('audio', stream);
-                const res = await requests('http://hujanapi.xyz/api/stt?apikey='+nwhrYGIgbI1UM2E, { method: 'POST', body: form })
+                const res = await requests('http://hujanapi.xyz/api/stt?apikey='+APIKUY, { method: 'POST', body: form })
                 const ret =  await res.json()
                 wa.sendMessage(to, ret.result)
                 fs.unlinkSync(file)
@@ -368,7 +368,7 @@ event.on('chat-update', async(msg) =>{
                 const stream = fs.createReadStream(file);
                 const form = new FormData();
                 form.append('webp', stream);
-                const res = await requests('http://hujanapi.xyz/api/webp2mp4?apikey='+nwhrYGIgbI1UM2E, { method: 'POST', body: form })
+                const res = await requests('http://hujanapi.xyz/api/webp2mp4?apikey='+APIKUY, { method: 'POST', body: form })
                 const ret =  await res.json()
                 wa.sendMediaURL(to, ret.result)
                 fs.unlinkSync(file)
@@ -379,7 +379,7 @@ event.on('chat-update', async(msg) =>{
                 const stream = fs.createReadStream(file);
                 const form = new FormData();
                 form.append('webp', stream);
-                const res = await requests('http://hujanapi.xyz/api/webp2mp4?apikey='+nwhrYGIgbI1UM2E, { method: 'POST', body: form })
+                const res = await requests('http://hujanapi.xyz/api/webp2mp4?apikey='+APIKUY, { method: 'POST', body: form })
                 const ret =  await res.json()
                 wa.downloadFile(ret.result, "./media/output.mp4")
                 setTimeout(async ()=>{
@@ -388,7 +388,7 @@ event.on('chat-update', async(msg) =>{
                     fs.unlinkSync("./media/output.mp4")
                 },5000)
                 printLogs(msg)
-            } else if (cmd == "👀"){
+            } else if (cmd == "to hidetag"){
                 msg.message = msg.quoted
                 const file = await event.downloadAndSaveMediaMessage(msg, msg_id)
                 wa.hideTagSticker(to, file)
@@ -517,7 +517,7 @@ event.on('chat-update', async(msg) =>{
             mat += '⤷ Setgroupdesc <text>\n'
             mat += '⤷ Setgroupname <text>\n'
             mat += '⤷ Fakereply <msg you>|<msg target>|<@>\n'
-            mat += '⤷ 🐦\n'
+            mat += '⤷ Hidetag\n'
             mat += '⤷ Joingc <link gc>\n'
             mat += '⤷ Getpict <@>\n'
             mat += '⤷ Getbio <@>\n'
@@ -615,7 +615,7 @@ event.on('chat-update', async(msg) =>{
             mat += '⤷ Setfakestatus <img>\n'
             mat += '⤷ Totext\n'
             mat += '⤷ To sscode\n'
-            mat += '⤷ 👀 <img/sticker>\n'
+            mat += '⤷ To Hidetag <img/sticker>\n'
             mat += '⤷ Toimg\n'
             mat += '⤷ Tomp4'
             wa.sendMention(to, mat, [cr1,cr2])
@@ -763,10 +763,10 @@ event.on('chat-update', async(msg) =>{
                 wa.sendMessage(to, pdata.status)
             }
             printLogs(msg)
-        } else if (cmd.startsWith("🐦")) {
+        } else if (cmd.startsWith("hidetag")) {
             if (!modecmd(sender)) return
             if (args.length === 1) return 
-            const xtext = cmd.replace('🐦' + " ", "")
+            const xtext = cmd.replace('hidetag' + " ", "")
             wa.hideTag(to, xtext)
             printLogs(msg)
         } else if (cmd.startsWith("fakereply")) {
@@ -970,7 +970,7 @@ event.on('chat-update', async(msg) =>{
 //============[ Media ]============\\
         } else if (cmd.startsWith("quranlist")) {
             if (!modecmd(sender)) return
-            const response = await requests("http://hujanapi.xyz/api/surahalquran?apikey="+nwhrYGIgbI1UM2E)
+            const response = await requests("http://hujanapi.xyz/api/surahalquran?apikey="+APIKUY)
             const mat = await response.json()
             let num = 0
             let xyz = "╭──「 Al-Qur'an 」"
@@ -983,7 +983,7 @@ event.on('chat-update', async(msg) =>{
             printLogs(msg)
         } else if (cmd.startsWith("surah")) {
             const xtext = text.replace("surah ", "")
-            const response = await requests("http://hujanapi.xyz/api/surah?query="+xtext+"&apikey="+nwhrYGIgbI1UM2E)
+            const response = await requests("http://hujanapi.xyz/api/surah?query="+xtext+"&apikey="+APIKUY)
             const mat = await response.json()
             let num = 0
             let xyz = " 「 Al-Qur'an 」\nSurah: *"+mat.name+"*\n"
@@ -995,7 +995,7 @@ event.on('chat-update', async(msg) =>{
             printLogs(msg)
         } else if (cmd.startsWith("ayatkursi")) {
             if (!modecmd(sender)) return
-            const response = await requests("http://hujanapi.xyz/api/ayatkursi?apikey="+nwhrYGIgbI1UM2E)
+            const response = await requests("http://hujanapi.xyz/api/ayatkursi?apikey="+APIKUY)
             const mat = await response.json()
             let xyz = "*Ayatkursi*\n\n"
             xyz += mat.data.arabic
@@ -1004,7 +1004,7 @@ event.on('chat-update', async(msg) =>{
         } else if (cmd.startsWith("pinterest")) {
             if (!modecmd(sender)) return
             const xtext = cmd.replace('pinterest' + " ", "")
-            const response = await requests("http://hujanapi.xyz/api/pinterest?query="+xtext+"&apikey="+nwhrYGIgbI1UM2E)
+            const response = await requests("http://hujanapi.xyz/api/pinterest?query="+xtext+"&apikey="+APIKUY)
             const mat = await response.json()
             const data = mat.result.data
             let kya = data[Math.floor(Math.random() * data.length)]
@@ -1013,7 +1013,7 @@ event.on('chat-update', async(msg) =>{
         } else if (cmd.startsWith("jadwalshalat")) {
             if (!modecmd(sender)) return
             const xtext = cmd.replace('jadwalshalat' + " ", "")
-            const response = await requests("http://hujanapi.xyz/api/jadwalsholat?query="+xtext+"&apikey="+nwhrYGIgbI1UM2E)
+            const response = await requests("http://hujanapi.xyz/api/jadwalsholat?query="+xtext+"&apikey="+APIKUY)
             const mat = await response.json()
             let fox = "*Jadwal Shalat "+xtext+"*\n"
             for (let i of mat.result) {
@@ -1028,7 +1028,7 @@ event.on('chat-update', async(msg) =>{
         } else if (cmd.startsWith("stickerline")) {
             if (!modecmd(sender)) return
             const xtext = txt.replace('stickerline' + " ", "")
-            const response = await requests("http://hujanapi.xyz/api/stickerline?url="+xtext+"&apikey="+nwhrYGIgbI1UM2E)
+            const response = await requests("http://hujanapi.xyz/api/stickerline?url="+xtext+"&apikey="+APIKUY)
             const data = await response.json()
             const cok = data.result
             for (var iu = 0; iu < data.length; iu++) {
@@ -1042,21 +1042,21 @@ event.on('chat-update', async(msg) =>{
         } else if (cmd.startsWith("dogbin")) {
             if (!modecmd(sender)) return
             const xtext = cmd.replace('dogbin' + " ", "")
-            const response = await requests("http://hujanapi.xyz/api/dogbin?text="+xtext+ "&apikey="+nwhrYGIgbI1UM2E)
+            const response = await requests("http://hujanapi.xyz/api/dogbin?text="+xtext+ "&apikey="+APIKUY)
             const mat = await response.json()
             wa.sendMessage(to, mat.result)
             printLogs(msg)
         } else if (cmd.startsWith("nekobin")) {
             if (!modecmd(sender)) return
             const xtext = cmd.replace('nekobin' + " ", "")
-            const response = await requests("http://hujanapi.xyz/api/nekobin?text="+xtext+ "&apikey="+nwhrYGIgbI1UM2E)
+            const response = await requests("http://hujanapi.xyz/api/nekobin?text="+xtext+ "&apikey="+APIKUY)
             const mat = await response.json()
             wa.sendMessage(to, mat.result)
             printLogs(msg)
         } else if (cmd.startsWith("ceklistrik")) {
             if (!modecmd(sender)) return
             const xtext = cmd.replace('ceklistrik' + " ", "")
-            const response = await requests("http://hujanapi.xyz/api/listrik?nop="+xtext+ "&apikey="+nwhrYGIgbI1UM2E)
+            const response = await requests("http://hujanapi.xyz/api/listrik?nop="+xtext+ "&apikey="+APIKUY)
             const mat = await response.json()
             if (mat.status == '422') {
                 const crot = mat.meesage
@@ -1074,7 +1074,7 @@ event.on('chat-update', async(msg) =>{
         } else if (cmd.startsWith("cektelkom")) {
             if (!modecmd(sender)) return
             const xtext = cmd.replace('cektelkom' + " ", "")
-            const response = await requests("http://hujanapi.xyz/api/telkom?nop="+xtext+ "&apikey="+nwhrYGIgbI1UM2E)
+            const response = await requests("http://hujanapi.xyz/api/telkom?nop="+xtext+ "&apikey="+APIKUY)
             const mat = await response.json()
             if (mat.status == '400') {
                 const crot = mat.meesage
@@ -1094,7 +1094,7 @@ event.on('chat-update', async(msg) =>{
         } else if (cmd.startsWith("sscode")) {
             if (!modecmd(sender)) return
             const xtext = cmd.replace('sscode' + " ", "")
-            const response = await requests("http://hujanapi.xyz/api/sscode?query="+xtext+"&apikey="+nwhrYGIgbI1UM2E)
+            const response = await requests("http://hujanapi.xyz/api/sscode?query="+xtext+"&apikey="+APIKUY)
             const mat = await response.json()
             wa.sendMediaURL(to,mat.result)
             printLogs(msg)
@@ -1102,7 +1102,7 @@ event.on('chat-update', async(msg) =>{
             if (!modecmd(sender)) return
             if (args.length === 1) return wa.sendReply(to, "Ex: *nickff [id ff]*\nContoh : *nickff 866740835*")
             const xtext = cmd.replace('nickff' + " ", "")
-            const response = await requests("http://hujanapi.xyz/api/nickff?id="+xtext+"&apikey="+nwhrYGIgbI1UM2E)
+            const response = await requests("http://hujanapi.xyz/api/nickff?id="+xtext+"&apikey="+APIKUY)
             const mat = await response.json()
             wa.sendReply(to, mat.result)
             printLogs(msg)
@@ -1110,7 +1110,7 @@ event.on('chat-update', async(msg) =>{
             if (!modecmd(sender)) return
             if (args.length === 1) return wa.sendReply(to, "Ex: *nickcodm [id codm]*\nContoh : *nickcodm 7852089867668209248*")
             const xtext = cmd.replace('nickff' + " ", "")
-            const response = await requests("http://hujanapi.xyz/api/nickcodm?id="+xtext+"&apikey="+nwhrYGIgbI1UM2E)
+            const response = await requests("http://hujanapi.xyz/api/nickcodm?id="+xtext+"&apikey="+APIKUY)
             const mat = await response.json()
             wa.sendReply(to, mat.result)
             printLogs(msg)
@@ -1119,21 +1119,21 @@ event.on('chat-update', async(msg) =>{
             if (args.length === 1) return wa.sendReply(to, "Ex: *nickml [id ml]|[serverid]*\nContoh : *nickml 1161941|2002*")
             const xtext = cmd.replace('nickml' + " ", "")
             pemisah = xtext.split("|")
-            const response = await requests("http://hujanapi.xyz/api/nickml?id="+pemisah[0]+"&serverid="+pemisah[1]+"&apikey="+nwhrYGIgbI1UM2E)
+            const response = await requests("http://hujanapi.xyz/api/nickml?id="+pemisah[0]+"&serverid="+pemisah[1]+"&apikey="+APIKUY)
             const mat = await response.json()
             wa.sendReply(to, mat.result)
             printLogs(msg)
         } else if (cmd.startsWith("cocofundl")) {
             if (!modecmd(sender)) return
             const xtext = text.replace('cocofundl' + " ", "")
-            const response = await requests("http://hujanapi.xyz/api/cocofun?url="+xtext+"&apikey=" + nwhrYGIgbI1UM2E)
+            const response = await requests("http://hujanapi.xyz/api/cocofun?url="+xtext+"&apikey=" + APIKUY)
             const data = await response.json()
             const cok = data.result
             wa.sendMediaURL(to, data.result.url, "*COCOFUN DOWNLOAD*")
             printLogs(msg)
         } else if (cmd == "herolistml") {
             if (!modecmd(sender)) return
-            const response = await requests("http://hujanapi.xyz/api/listheroml?apikey=" + nwhrYGIgbI1UM2E)
+            const response = await requests("http://hujanapi.xyz/api/listheroml?apikey=" + APIKUY)
             const data = await response.json()
             const asu = data.result
             let fox = "*List Hero*\n"
@@ -1147,7 +1147,7 @@ event.on('chat-update', async(msg) =>{
         } else if (cmd.startsWith("heroml")) {
             if (!modecmd(sender)) return
             const xtext = cmd.replace('heroml' + " ", "")
-            const response = await requests("http://hujanapi.xyz/api/heroml?hero="+xtext+"&apikey="+nwhrYGIgbI1UM2E)
+            const response = await requests("http://hujanapi.xyz/api/heroml?hero="+xtext+"&apikey="+APIKUY)
             const datas = await response.json()
             const asu = datas.results
             let fox = "*Detail Hero*\n"
@@ -1175,7 +1175,7 @@ event.on('chat-update', async(msg) =>{
             printLogs(msg)
         } else if (cmd == "charsgenshin") {
             if (!modecmd(sender)) return
-            const response = await requests("http://hujanapi.xyz/api/gichars?apikey=" + nwhrYGIgbI1UM2E)
+            const response = await requests("http://hujanapi.xyz/api/gichars?apikey=" + APIKUY)
             const data = await response.json()
             const liyue = data.result.liyue
             const mondstadt = data.result.mondstadt
@@ -1197,7 +1197,7 @@ event.on('chat-update', async(msg) =>{
         } else if (cmd.startsWith("chargi")) {
             if (!modecmd(sender)) return
             const xtext = cmd.replace('chargi' + " ", "")
-            const response = await requests("http://hujanapi.xyz/api/gichar?query="+xtext+"&apikey="+nwhrYGIgbI1UM2E)
+            const response = await requests("http://hujanapi.xyz/api/gichar?query="+xtext+"&apikey="+APIKUY)
             const datas = await response.json()
             const asu = datas.result
             let fox = "*Detail Character*\n"
@@ -1208,7 +1208,7 @@ event.on('chat-update', async(msg) =>{
             printLogs(msg)
         } else if (cmd.startsWith("pokemonrandom")) {
             if (!modecmd(sender)) return
-            const response = await requests("http://hujanapi.xyz/api/pokemon?apikey="+nwhrYGIgbI1UM2E)
+            const response = await requests("http://hujanapi.xyz/api/pokemon?apikey="+APIKUY)
             const datas = await response.json()
             const asu = datas.result
             let weak = ""
@@ -1234,7 +1234,7 @@ event.on('chat-update', async(msg) =>{
         } else if (cmd.startsWith("pokemon ")) {
             if (!modecmd(sender)) return
             const xtext = cmd.replace("pokemon ", "")
-            const response = await requests("http://hujanapi.xyz/api/pokemonx?query="+xtext+"&apikey="+nwhrYGIgbI1UM2E)
+            const response = await requests("http://hujanapi.xyz/api/pokemonx?query="+xtext+"&apikey="+APIKUY)
             const datas = await response.json()
             const asu = datas.result
             let weak = ""
@@ -1260,21 +1260,21 @@ event.on('chat-update', async(msg) =>{
         } else if (cmd.startsWith("lirik")) {
             if (!modecmd(sender)) return
             const xtext = cmd.replace('lirik' + " ", "")
-            const response = await requests("http://hujanapi.xyz/api/lirik?query="+xtext+"&apikey="+nwhrYGIgbI1UM2E)
+            const response = await requests("http://hujanapi.xyz/api/lirik?query="+xtext+"&apikey="+APIKUY)
             const data = await response.json()
             wa.sendReplyWA(to, data.lyric, "*Lirik Lagu "+data.title+"*")
             printLogs(msg)
         } else if (cmd.startsWith("chord")) {
             if (!modecmd(sender)) return
             const xtext = cmd.replace('chord' + " ", "")
-            const response = await requests("http://hujanapi.xyz/api/chord?query="+xtext+"&apikey="+nwhrYGIgbI1UM2E)
+            const response = await requests("http://hujanapi.xyz/api/chord?query="+xtext+"&apikey="+APIKUY)
             const data = await response.json()
             wa.sendMessage(to, data.result)
             printLogs(msg)
         } else if (cmd.startsWith("wikipedia")) {
             if (!modecmd(sender)) return
             const xtext = cmd.replace('wikipedia' + " ", "")
-            const response = await requests("http://hujanapi.xyz/api/wikipedia?query=" + xtext + "&apikey="+nwhrYGIgbI1UM2E)
+            const response = await requests("http://hujanapi.xyz/api/wikipedia?query=" + xtext + "&apikey="+APIKUY)
             const datas = await response.json()
             const asu = datas.result
             const pp = datas.result.img
@@ -1287,7 +1287,7 @@ event.on('chat-update', async(msg) =>{
         } else if (cmd.startsWith("gsmarena")) {
             if (!modecmd(sender)) return
             const xtext = cmd.replace('gsmarena' + " ", "")
-            const response = await requests("http://hujanapi.xyz/api/gsmarena?query=" + xtext + "&apikey=" + nwhrYGIgbI1UM2E)
+            const response = await requests("http://hujanapi.xyz/api/gsmarena?query=" + xtext + "&apikey=" + APIKUY)
             const datas = await response.json()
             let fox = "*Result GSMarena*\n"
             fox += "\n*Title :*\n" + datas.result.title
@@ -1297,7 +1297,7 @@ event.on('chat-update', async(msg) =>{
         } else if (cmd.startsWith("artinama")) {
             if (!modecmd(sender)) return
             const xtext = cmd.replace('artinama' + " ", "")
-            const response = await requests("http://hujanapi.xyz/api/artinama?query="+xtext+"&apikey="+nwhrYGIgbI1UM2E)
+            const response = await requests("http://hujanapi.xyz/api/artinama?query="+xtext+"&apikey="+APIKUY)
             const datas = await response.json()
             const asu = datas.result
             wa.sendMessage(to, asu.result)
@@ -1305,7 +1305,7 @@ event.on('chat-update', async(msg) =>{
         } else if (cmd.startsWith("artimimpi")) {
             if (!modecmd(sender)) return
             const xtext = cmd.replace('artimimpi' + " ", "")
-            const response = await requests("http://hujanapi.xyz/api/artimimpi?query="+xtext+"&apikey="+nwhrYGIgbI1UM2E)
+            const response = await requests("http://hujanapi.xyz/api/artimimpi?query="+xtext+"&apikey="+APIKUY)
             const datas = await response.json()
             const asu = datas.result
             wa.sendMessage(to, asu.result)
@@ -1314,7 +1314,7 @@ event.on('chat-update', async(msg) =>{
             if (!modecmd(sender)) return
             const xtext = cmd.replace('jodoh' + " ", "")
             pemisah = xtext.split("|")
-            const response = await requests("http://hujanapi.xyz/api/ramalanjodoh?name1="+pemisah[0]+"&name2="+pemisah[1]+"&apikey="+nwhrYGIgbI1UM2E)
+            const response = await requests("http://hujanapi.xyz/api/ramalanjodoh?name1="+pemisah[0]+"&name2="+pemisah[1]+"&apikey="+APIKUY)
             const datas = await response.json()
             const asu = datas.result
             let fox = '*Ramalan Jodoh*\n\n'
@@ -1327,28 +1327,28 @@ event.on('chat-update', async(msg) =>{
         } else if (cmd.startsWith("urlshortener1")) {
             if (!modecmd(sender)) return
             const xtext = cmd.replace('urlshortener1' + " ", "")
-            const response = await requests("http://hujanapi.xyz/api/shorturl?url="+xtext+"&apikey="+nwhrYGIgbI1UM2E)
+            const response = await requests("http://hujanapi.xyz/api/shorturl?url="+xtext+"&apikey="+APIKUY)
             const anu = await response.json()
             wa.sendMessage(to, anu.result.Short)
             printLogs(msg)
         } else if (cmd.startsWith("urlshortener2")) {
             if (!modecmd(sender)) return
             const xtext = cmd.replace('urlshortener2' + " ", "")
-            const response = await requests("http://hujanapi.xyz/api/cuttly?url="+xtext+"&apikey="+nwhrYGIgbI1UM2E)
+            const response = await requests("http://hujanapi.xyz/api/cuttly?url="+xtext+"&apikey="+APIKUY)
             const anu = await response.json()
             wa.sendMessage(to, anu.result.Short)
             printLogs(msg)
         } else if (cmd.startsWith("ssweb")) {
             if (!modecmd(sender)) return
             const xtext = cmd.replace('ssweb' + " ", "")
-            const response = await requests("http://hujanapi.xyz/api/ssweb?url="+xtext+"&apikey="+nwhrYGIgbI1UM2E)
+            const response = await requests("http://hujanapi.xyz/api/ssweb?url="+xtext+"&apikey="+APIKUY)
             const mat = await response.json()
             wa.sendMediaURL(to, response, "*Your requests*")
             printLogs(msg)
         } else if (cmd.startsWith("mediafiredl")) {
             if (!modecmd(sender)) return
             const xtext = cmd.replace('mediafiredl' + " ", "")
-            const response = await requests("http://hujanapi.xyz/api/mediafire?url="+xtext+"&apikey="+nwhrYGIgbI1UM2E)
+            const response = await requests("http://hujanapi.xyz/api/mediafire?url="+xtext+"&apikey="+APIKUY)
             const mat = await response.json()
             let fox = '*Mediafire Download*\n\n'
             fox += '*Title:* '+mat.result.title
@@ -1360,7 +1360,7 @@ event.on('chat-update', async(msg) =>{
         } else if (cmd.startsWith("zippydl")) {
             if (!modecmd(sender)) return
             const xtext = cmd.replace('zippydl' + " ", "")
-            const response = await requests("http://hujanapi.xyz/api/zippydl?url="+xtext+"&apikey="+nwhrYGIgbI1UM2E)
+            const response = await requests("http://hujanapi.xyz/api/zippydl?url="+xtext+"&apikey="+APIKUY)
             const mat = await response.json()
             let fox = '*Zippyshare Download*\n\n'
             fox += '\n*Size:* '+mat.size
@@ -1370,7 +1370,7 @@ event.on('chat-update', async(msg) =>{
         } else if (cmd.startsWith("solidfilesdl")) {
             if (!modecmd(sender)) return
             const xtext = cmd.replace('solidfilesdl' + " ", "")
-            const response = await requests("http://hujanapi.xyz/api/solidfiles?url="+xtext+"&apikey="+nwhrYGIgbI1UM2E)
+            const response = await requests("http://hujanapi.xyz/api/solidfiles?url="+xtext+"&apikey="+APIKUY)
             const mat = await response.json()
             let fox = '*Solidfiles Download*\n\n'
             fox += '*Title:* '+mat.result.title
@@ -1381,7 +1381,7 @@ event.on('chat-update', async(msg) =>{
         } else if (cmd.startsWith("fancytext")) {
             if (!modecmd(sender)) return
             const xtext = cmd.replace('fancytext' + " ", "")
-            const response = await requests("http://hujanapi.xyz/api/fancy?query="+xtext+"&apikey="+nwhrYGIgbI1UM2E)
+            const response = await requests("http://hujanapi.xyz/api/fancy?query="+xtext+"&apikey="+APIKUY)
             const mat = await response.json()
             const asu = mat.result.data
             let fox = '*Fancytext*\n\n'
@@ -1395,7 +1395,7 @@ event.on('chat-update', async(msg) =>{
         } else if (cmd.startsWith("nabi")) {
             if (!modecmd(sender)) return
             pemisah = cmd.split(" ")
-            const response = await requests("http://hujanapi.xyz/api/rasul?apikey="+nwhrYGIgbI1UM2E)
+            const response = await requests("http://hujanapi.xyz/api/rasul?apikey="+APIKUY)
             const datas = await response.json()
             const xyz = datas.result.data
             if (pemisah.length == 1) {
@@ -1421,7 +1421,7 @@ event.on('chat-update', async(msg) =>{
             if (!modecmd(sender)) return
             const xtext = cmd.replace("shopee ", "")
             pemisah = xtext.split("|")
-            const response = await requests("http://hujanapi.xyz/api/shopee?query="+xtext+"&count=10&apikey="+nwhrYGIgbI1UM2E)
+            const response = await requests("http://hujanapi.xyz/api/shopee?query="+xtext+"&count=10&apikey="+APIKUY)
             const datas = await response.json()
             const img = 'https://igo.space/wp-content/uploads/2020/09/logo.png'
             const asu = datas.result.items
@@ -1452,7 +1452,7 @@ event.on('chat-update', async(msg) =>{
         } else if (cmd.startsWith("topnews")) {
             if (!modecmd(sender)) return
             pemisah = cmd.split(" ")
-            const response = await requests("http://hujanapi.xyz/api/topnews?apikey="+nwhrYGIgbI1UM2E)
+            const response = await requests("http://hujanapi.xyz/api/topnews?apikey="+APIKUY)
             const mat = await response.json()
             let num = 0
             let fox = "*Topnews*\n\n"
@@ -1478,7 +1478,7 @@ event.on('chat-update', async(msg) =>{
             if (cmd == "doujin") { 
                 wa.sendMessage(to, res)
             } else if (cond[0].toLowerCase() == "search") {
-                const response = await requests("http://hujanapi.xyz/api/doujindesuserach?query="+cond[1]+"&apikey="+nwhrYGIgbI1UM2E)
+                const response = await requests("http://hujanapi.xyz/api/doujindesuserach?query="+cond[1]+"&apikey="+APIKUY)
                 const data = await response.json()
                 const chap = data.result.chap
                 let genres = ""
@@ -1493,7 +1493,7 @@ event.on('chat-update', async(msg) =>{
                 wa.sendMediaURL(to, data.result.img, d)
             } else if (cond[0].toLowerCase() == "post"){
                 wa.sendReply(to, "Please wait....")
-                const response = await requests("http://hujanapi.xyz/api/doujindesudl?url="+cond[1]+"&apikey="+nwhrYGIgbI1UM2E)
+                const response = await requests("http://hujanapi.xyz/api/doujindesudl?url="+cond[1]+"&apikey="+APIKUY)
                 const mat = await response.json()
                 const media = mat.result.data
                 const title = mat.result.title
@@ -1520,7 +1520,7 @@ event.on('chat-update', async(msg) =>{
                 setTimeout(async ()=>{return await wa.sendPdf(to, './output.pdf', mat.result.title);},5000)
                 setTimeout(async ()=>{return await fs.unlinkSync('./output.pdf');},5000)
             } else if (cond[0].toLowerCase() == "latest"){
-                const response = await requests("http://hujanapi.xyz/api/doujindesulatest?&apikey="+nwhrYGIgbI1UM2E)
+                const response = await requests("http://hujanapi.xyz/api/doujindesulatest?&apikey="+APIKUY)
                 const data = await response.json()
                 num = 0
                 let d = "  ｢ Doujin Latest ｣\n"
@@ -1535,7 +1535,7 @@ event.on('chat-update', async(msg) =>{
             if (!modecmd(sender)) return
             const xtext = cmd.replace("kiryuu ", "")
             pemisah = xtext.split("|")
-            const response = await requests("http://hujanapi.xyz/api/kiryuu?query="+pemisah[0]+"&apikey="+nwhrYGIgbI1UM2E)
+            const response = await requests("http://hujanapi.xyz/api/kiryuu?query="+pemisah[0]+"&apikey="+APIKUY)
             const datas = await response.json()
             const asu = datas.result.data
             if (pemisah.length == 1)  {
@@ -1550,7 +1550,7 @@ event.on('chat-update', async(msg) =>{
             }
             if (pemisah.length == 2) {
                 const value = Number(pemisah[1] - 1)
-                const r = await requests("http://hujanapi.xyz/api/kiryuuinfo?url="+asu[value].url+"&apikey="+nwhrYGIgbI1UM2E)
+                const r = await requests("http://hujanapi.xyz/api/kiryuuinfo?url="+asu[value].url+"&apikey="+APIKUY)
                 const mat = await r.json()
                 const chap = mat.result.chapter
                 let d = "  ｢ Kiryuu Search ｣\n"
@@ -1565,7 +1565,7 @@ event.on('chat-update', async(msg) =>{
             if (!modecmd(sender)) return
             const xtext = cmd.replace("kiryuudl ", "")
             wa.sendReply(to, "Please wait....")
-            const response = await requests("http://hujanapi.xyz/api/kiryuudl?query="+xtext+"&apikey="+nwhrYGIgbI1UM2E)
+            const response = await requests("http://hujanapi.xyz/api/kiryuudl?query="+xtext+"&apikey="+APIKUY)
             const mat = await response.json()
             const media = mat.result.data
             const title = mat.result.title
@@ -1597,7 +1597,7 @@ event.on('chat-update', async(msg) =>{
             const xtext = cmd.replace("xvideos ", "")
             pemisah = xtext.split("|")
             const search = pemisah[0]
-            const response = await requests("http://hujanapi.xyz/api/xvideos?query="+search+"&apikey="+nwhrYGIgbI1UM2E)
+            const response = await requests("http://hujanapi.xyz/api/xvideos?query="+search+"&apikey="+APIKUY)
             const datas = await response.json()
             const img = 'https://seeklogo.com/images/X/xvideos-logo-77E7B4F168-seeklogo.com.png'
             const asu = datas.result
@@ -1627,7 +1627,7 @@ event.on('chat-update', async(msg) =>{
             if (!modecmd(sender)) return
             const xtext = cmd.replace("xnxx ", "")
             pemisah = xtext.split("|")
-            const response = await requests("http://hujanapi.xyz/api/xnxx?query="+xtext+"&apikey="+nwhrYGIgbI1UM2E)
+            const response = await requests("http://hujanapi.xyz/api/xnxx?query="+xtext+"&apikey="+APIKUY)
             const datas = await response.json()
             const img = 'https://yt3.ggpht.com/ytc/AAUvwngpbURJyno0rvS4aza889YDF7-oXbRyopWO0bZO=s900-c-k-c0x00ffffff-no-rj'
             const asu = datas.result
@@ -1656,7 +1656,7 @@ event.on('chat-update', async(msg) =>{
         } else if (cmd.startsWith("xnxxdl ")) {
             if (!modecmd(sender)) return
             const xtext = cmd.replace("xnxxdl ", "")
-            const response = await requests("http://hujanapi.xyz/api/xnxxdl?url="+xtext+"&apikey="+nwhrYGIgbI1UM2E)
+            const response = await requests("http://hujanapi.xyz/api/xnxxdl?url="+xtext+"&apikey="+APIKUY)
             const asu = await response.json()
             if (Number(asu.size.split(' MB')[0]) > 40.00) return wa.sendReply(to, 'Error Send Video\ncause size file is big')
             let crot = "*Xnxx Download*\n\n"
@@ -1669,7 +1669,7 @@ event.on('chat-update', async(msg) =>{
         } else if (cmd.startsWith("xvideosdl ")) {
             if (!modecmd(sender)) return
             const xtext = cmd.replace("xvideosdl ", "")
-            const response = await requests("http://hujanapi.xyz/api/xvideosdl?url="+xtext+"&apikey="+nwhrYGIgbI1UM2E)
+            const response = await requests("http://hujanapi.xyz/api/xvideosdl?url="+xtext+"&apikey="+APIKUY)
             const asu = await response.json()
             if (Number(asu.size.split(' MB')[0]) > 40.00) return wa.sendReply(to, 'Error Send Video\ncause size file is big')
             let crot = "*Xnxx Download*\n\n"
@@ -1682,7 +1682,7 @@ event.on('chat-update', async(msg) =>{
         } else if (cmd.startsWith("cersex")) {
             if (!modecmd(sender)) return
             const xtext = cmd.replace('cersex' + " ", "")
-            const response = await requests("http://hujanapi.xyz/api/cersex?apikey=" + nwhrYGIgbI1UM2E)
+            const response = await requests("http://hujanapi.xyz/api/cersex?apikey=" + APIKUY)
             const datas = await response.json()
             const asu = datas.result
             var img = asu.img
@@ -1692,33 +1692,33 @@ event.on('chat-update', async(msg) =>{
             printLogs(msg)
         } else if (cmd == "randompantun") {
             if (!modecmd(sender)) return
-            const response = await requests("http://hujanapi.xyz/api/pantun?apikey=" + nwhrYGIgbI1UM2E)
+            const response = await requests("http://hujanapi.xyz/api/pantun?apikey=" + APIKUY)
             const data = await response.json()
             const crot = data.result
             wa.sendMessage(to, crot.result)
             printLogs(msg)
         } else if (cmd == "quoteid") {
             if (!modecmd(sender)) return
-            const response = await requests("http://hujanapi.xyz/api/quotesid?apikey=" + nwhrYGIgbI1UM2E)
+            const response = await requests("http://hujanapi.xyz/api/quotesid?apikey=" + APIKUY)
             const data = await response.json()
             wa.sendMessage(to, data.result.quotes)
             printLogs(msg)
         } else if (cmd == "quotes") {
             if (!modecmd(sender)) return
-            const response = await requests("http://hujanapi.xyz/api/quotesen?apikey=" + nwhrYGIgbI1UM2E)
+            const response = await requests("http://hujanapi.xyz/api/quotesen?apikey=" + APIKUY)
             const data = await response.json()
             wa.sendMessage(to, data.result.quotes)
             printLogs(msg)
         } else if (cmd == "quotesanime") {
             if (!modecmd(sender)) return
-            const response = await requests("http://hujanapi.xyz/api/quoteanime?apikey=" + nwhrYGIgbI1UM2E)
+            const response = await requests("http://hujanapi.xyz/api/quoteanime?apikey=" + APIKUY)
             const data = await response.json()
             const res = data.result.quote+"\n\nAnime:"+data.result.anime+"\nCharacter"+data.result.character
             wa.sendMessage(to, res)
             printLogs(msg)
         } else if (cmd == "randomcat") {
             if (!modecmd(sender)) return
-            const response = await requests("http://hujanapi.xyz/api/randomcat?apikey=" + nwhrYGIgbI1UM2E)
+            const response = await requests("http://hujanapi.xyz/api/randomcat?apikey=" + APIKUY)
             const data = await response.json()
             wa.sendMediaURL(to, data.result.url, "*_Random Cat_* @!", [sender])
             printLogs(msg)
@@ -1727,7 +1727,7 @@ event.on('chat-update', async(msg) =>{
             try{
                 const xtext = cmd.replace('fflogo' + " ", "")
                 pemisah = xtext.split("|")
-                const response = await requests("http://hujanapi.xyz/api/fftext?text="+pemisah[0]+"&hero="+pemisah[1]+"&apikey="+nwhrYGIgbI1UM2E)
+                const response = await requests("http://hujanapi.xyz/api/fftext?text="+pemisah[0]+"&hero="+pemisah[1]+"&apikey="+APIKUY)
                 const mat = await response.json()
                 wa.sendMediaURL(to, mat.result, "*Your requests*")
             }catch{
@@ -1750,7 +1750,7 @@ event.on('chat-update', async(msg) =>{
             try{
                 const xtext = cmd.replace('mllogo' + " ", "")
                 pemisah = xtext.split("|")
-                const response = await requests("http://hujanapi.xyz/api/mltext?text="+pemisah[0]+"&hero="+pemisah[1]+"&apikey="+nwhrYGIgbI1UM2E)
+                const response = await requests("http://hujanapi.xyz/api/mltext?text="+pemisah[0]+"&hero="+pemisah[1]+"&apikey="+APIKUY)
                 const mat = await response.json()
                 wa.sendMediaURL(to, mat.result, "*Your requests*")
             }catch{
@@ -1771,35 +1771,35 @@ event.on('chat-update', async(msg) =>{
         } else if (cmd.startsWith("wetglass")) {
             if (!modecmd(sender)) return
             const xtext = txt.replace('wetglass' + " ", "")
-            const response = await requests("http://hujanapi.xyz/api/wetglass?text="+xtext+"&apikey="+nwhrYGIgbI1UM2E)
+            const response = await requests("http://hujanapi.xyz/api/wetglass?text="+xtext+"&apikey="+APIKUY)
             const mat = await response.json()
             wa.sendMediaURL(to, mat.result, "*Your Requests*")
             printLogs(msg)
         } else if (cmd.startsWith("thunder")) {
             if (!modecmd(sender)) return
             const xtext = txt.replace('thunder' + " ", "")
-            const response = await requests("http://hujanapi.xyz/api/thunder?text="+xtext+"&apikey="+nwhrYGIgbI1UM2E)
+            const response = await requests("http://hujanapi.xyz/api/thunder?text="+xtext+"&apikey="+APIKUY)
             const mat = await response.json()
             wa.sendMediaURL(to, mat.result, "*Your Requests*")
             printLogs(msg)
         } else if (cmd.startsWith("blackpink")) {
             if (!modecmd(sender)) return
             const xtext = txt.replace('blackpink' + " ", "")
-            const response = await requests("http://hujanapi.xyz/api/blackpink?text="+xtext+"&apikey="+nwhrYGIgbI1UM2E)
+            const response = await requests("http://hujanapi.xyz/api/blackpink?text="+xtext+"&apikey="+APIKUY)
             const mat = await response.json()
             wa.sendMediaURL(to, mat.result, "*Your Requests*")
             printLogs(msg)
         } else if (cmd.startsWith("skyonline")) {
             if (!modecmd(sender)) return
             const xtext = txt.replace('skyonline' + " ", "")
-            const response = await requests("http://hujanapi.xyz/api/skyonline?text="+xtext+"&apikey="+nwhrYGIgbI1UM2E)
+            const response = await requests("http://hujanapi.xyz/api/skyonline?text="+xtext+"&apikey="+APIKUY)
             const mat = await response.json()
             wa.sendMediaURL(to, mat.result, "*Your Requests*")
             printLogs(msg)
         } else if (cmd.startsWith("greenneon")) {
             if (!modecmd(sender)) return
             const xtext = txt.replace('greenneon' + " ", "")
-            const response = await requests("http://hujanapi.xyz/api/greenneon?text="+xtext+"&apikey="+nwhrYGIgbI1UM2E)
+            const response = await requests("http://hujanapi.xyz/api/greenneon?text="+xtext+"&apikey="+APIKUY)
             const mat = await response.json()
             wa.sendMediaURL(to, mat.result, "*Your Requests*")
             printLogs(msg)
@@ -1807,7 +1807,7 @@ event.on('chat-update', async(msg) =>{
             if (!modecmd(sender)) return
             const xtext = txt.replace('glitchtext' + " ", "")
             pemisah = xtext.split("|")
-            const response = await requests("http://hujanapi.xyz/api/glitch_text?text1="+pemisah[0]+"&text2="+pemisah[1]+"&apikey="+nwhrYGIgbI1UM2E)
+            const response = await requests("http://hujanapi.xyz/api/glitch_text?text1="+pemisah[0]+"&text2="+pemisah[1]+"&apikey="+APIKUY)
             const mat = await response.json()
             wa.sendMediaURL(to, mat.result, "*Your Requests*")
             printLogs(msg)
@@ -1815,7 +1815,7 @@ event.on('chat-update', async(msg) =>{
             if (!modecmd(sender)) return
             const xtext = txt.replace('marvelavengers' + " ", "")
             pemisah = xtext.split("|")
-            const response = await requests("http://hujanapi.xyz/api/marvelavengers?text1="+pemisah[0]+"&text2="+pemisah[1]+"&apikey="+nwhrYGIgbI1UM2E)
+            const response = await requests("http://hujanapi.xyz/api/marvelavengers?text1="+pemisah[0]+"&text2="+pemisah[1]+"&apikey="+APIKUY)
             const mat = await response.json()
             wa.sendMediaURL(to, mat.result, "*Your Requests*")
             printLogs(msg)
@@ -1823,7 +1823,7 @@ event.on('chat-update', async(msg) =>{
             if (!modecmd(sender)) return
             const xtext = txt.replace('marvelstudio' + " ", "")
             pemisah = xtext.split("|")
-            const response = await requests("http://hujanapi.xyz/api/marvelstudio?text1="+pemisah[0]+"&text2="+pemisah[1]+"&apikey="+nwhrYGIgbI1UM2E)
+            const response = await requests("http://hujanapi.xyz/api/marvelstudio?text1="+pemisah[0]+"&text2="+pemisah[1]+"&apikey="+APIKUY)
             const mat = await response.json()
             wa.sendMediaURL(to, mat.result, "*Your Requests*")
             printLogs(msg)
@@ -1831,7 +1831,7 @@ event.on('chat-update', async(msg) =>{
             if (!modecmd(sender)) return
             const xtext = txt.replace('wolfblack' + " ", "")
             pemisah = xtext.split("|")
-            const response = await requests("http://hujanapi.xyz/api/wolf_black?text1="+pemisah[0]+"&text2="+pemisah[1]+"&apikey="+nwhrYGIgbI1UM2E)
+            const response = await requests("http://hujanapi.xyz/api/wolf_black?text1="+pemisah[0]+"&text2="+pemisah[1]+"&apikey="+APIKUY)
             const mat = await response.json()
             wa.sendMediaURL(to, mat.result, "*Your Requests*")
             printLogs(msg)
@@ -1839,7 +1839,7 @@ event.on('chat-update', async(msg) =>{
             if (!modecmd(sender)) return
             const xtext = txt.replace('pornhub' + " ", "")
             pemisah = xtext.split("|")
-            const response = await requests("http://hujanapi.xyz/api/pornhub?text1="+pemisah[0]+"&text2="+pemisah[1]+"&apikey="+nwhrYGIgbI1UM2E)
+            const response = await requests("http://hujanapi.xyz/api/pornhub?text1="+pemisah[0]+"&text2="+pemisah[1]+"&apikey="+APIKUY)
             const mat = await response.json()
             wa.sendMediaURL(to, mat.result, "*Your Requests*")
             printLogs(msg)
@@ -1859,7 +1859,7 @@ event.on('chat-update', async(msg) =>{
             if (cmd == "youtube") { 
                 wa.sendMessage(to, res)
             } else if (cond[0].toLowerCase() == "search") {
-                const response = await requests("http://hujanapi.xyz/api/ytsearch?query="+cond[1]+"&apikey="+nwhrYGIgbI1UM2E)
+                const response = await requests("http://hujanapi.xyz/api/ytsearch?query="+cond[1]+"&apikey="+APIKUY)
                 const data = await response.json()
                 const asu = data.result
                 let fox = "*Youtube Search*\n"
@@ -1870,7 +1870,7 @@ event.on('chat-update', async(msg) =>{
                 }
                 wa.sendMessage(to, fox)
             } else if (cond[0].toLowerCase() == "mp3") {
-                const response = await requests("http://hujanapi.xyz/api/ytdl?url="+cond[1]+"&apikey="+nwhrYGIgbI1UM2E)
+                const response = await requests("http://hujanapi.xyz/api/ytdl?url="+cond[1]+"&apikey="+APIKUY)
                 const data = await response.json()
                 let yt = "*Youtube MP3*\n\n"
                 yt += "Title: _"+data.result.title+"_"
@@ -1880,7 +1880,7 @@ event.on('chat-update', async(msg) =>{
                 wa.sendMediaURL(to, data.result.image, yt)
                 wa.sendMediaURL(to, data.result.mp3)
             } else if (cond[0].toLowerCase() == "mp4") {
-                const response = await requests("http://hujanapi.xyz/api/ytdl?url="+cond[1]+"&apikey="+nwhrYGIgbI1UM2E)
+                const response = await requests("http://hujanapi.xyz/api/ytdl?url="+cond[1]+"&apikey="+APIKUY)
                 const data = await response.json()
                 let yt = "*Youtube MP3*\n\n"
                 yt += "Title: _"+data.result.title+"_"
@@ -1907,7 +1907,7 @@ event.on('chat-update', async(msg) =>{
                 wa.sendMessage(to, res)
             } else if (cond[0].toLowerCase() == "search") {
                 xyz = cond[1].split(" ")
-                const response = await requests("http://hujanapi.xyz/api/apkpure?query="+xyz+"&apikey="+nwhrYGIgbI1UM2E)
+                const response = await requests("http://hujanapi.xyz/api/apkpure?query="+xyz+"&apikey="+APIKUY)
                 const mat = await response.json()
                 let no = 0
                 let fox = "*Apkpure Search*\n"
@@ -1919,7 +1919,7 @@ event.on('chat-update', async(msg) =>{
                     wa.sendReply(to, fox)
                 }
             } else if (cond[0].toLowerCase() == "download") {
-                const response = await requests("http://hujanapi.xyz/api/apkpuredl?url="+xtext+"&apikey="+nwhrYGIgbI1UM2E)
+                const response = await requests("http://hujanapi.xyz/api/apkpuredl?url="+xtext+"&apikey="+APIKUY)
                 const mat = await response.json()
                 let xyz = "*Apkpure Download*\n"
                 xyz = "\n*Title:* "+mat.result.title
@@ -1945,7 +1945,7 @@ event.on('chat-update', async(msg) =>{
             if (cmd == "ig") { 
                 wa.sendMessage(to, res)
             } else if (cond[0].toLowerCase() == "profile") {
-                const response = await requests("http://hujanapi.xyz/api/ig?username="+cond[1]+"&apikey="+nwhrYGIgbI1UM2E)
+                const response = await requests("http://hujanapi.xyz/api/ig?username="+cond[1]+"&apikey="+APIKUY)
                 const data = await response.json()
                 let ig = "  ｢Instagram Profile｣\n"
                 ig += "\n• Username : "+data.result.user.username
@@ -1959,7 +1959,7 @@ event.on('chat-update', async(msg) =>{
                 photo = data.result.user.hd_profile_pic_url_info.url
                 wa.sendMediaURL(to, data.result.user.hd_profile_pic_url_info.url, ig)
             } else if (cond[0].toLowerCase() == "post"){
-                const response = await requests("http://hujanapi.xyz/api/igpost?url="+cond[1]+"&apikey="+nwhrYGIgbI1UM2E)
+                const response = await requests("http://hujanapi.xyz/api/igpost?url="+cond[1]+"&apikey="+APIKUY)
                 const data = await response.json()
                 const media = data.result.media
                 for (var a = 0; a < media.length; a++) {
@@ -1971,7 +1971,7 @@ event.on('chat-update', async(msg) =>{
                 }
             } else if (cond[0].toLowerCase() == "story"){
                 xyz = cond[2].split(" ")
-                const response = await requests("http://hujanapi.xyz/api/igstory?username="+cond[1]+"&apikey="+nwhrYGIgbI1UM2E)
+                const response = await requests("http://hujanapi.xyz/api/igstory?username="+cond[1]+"&apikey="+APIKUY)
                 const data = await response.json()
                 const num = xyz
                 if (num <= data.length){
@@ -1989,7 +1989,7 @@ event.on('chat-update', async(msg) =>{
                     }
                 }
             } else if (cond[0].toLowerCase() == "tv"){
-                const response = await requests("http://hujanapi.xyz/api/igtv?url="+cond[1]+"&apikey="+nwhrYGIgbI1UM2E)
+                const response = await requests("http://hujanapi.xyz/api/igtv?url="+cond[1]+"&apikey="+APIKUY)
                 const data = await response.json()
                 const mat = data.result.media[0]
                 wa.sendMediaURL(to, mat.video_url)
@@ -2301,19 +2301,19 @@ event.on('chat-update', async(msg) =>{
 //============[ ANIME ]============\\
         } else if (cmd == "randomloli") {
             if (!modecmd(sender)) return
-            const response = await requests("http://hujanapi.xyz/api/randomloli?apikey=" + nwhrYGIgbI1UM2E)
+            const response = await requests("http://hujanapi.xyz/api/randomloli?apikey=" + APIKUY)
             const data = await response.json()
             wa.sendMediaURL(to, data.result.result, "*RANDOM LOLI*")
             printLogs(msg)
         } else if (cmd == "randomhentai") {
             if (!modecmd(sender)) return
-            const response = await requests("http://hujanapi.xyz/api/randomhentai?apikey=" + nwhrYGIgbI1UM2E)
+            const response = await requests("http://hujanapi.xyz/api/randomhentai?apikey=" + APIKUY)
             const data = await response.json()
             wa.sendMediaURL(to, data.url, "*Your requests*")
             printLogs(msg)
         } else if (cmd == "randomblowjob") {
             if (!modecmd(sender)) return
-            const response = await requests("http://hujanapi.xyz/api/randomblowjob?apikey=" + nwhrYGIgbI1UM2E)
+            const response = await requests("http://hujanapi.xyz/api/randomblowjob?apikey=" + APIKUY)
             const data = await response.json()
             await wa.downloadFile(data.url, "./randomblowjob.gif")
             setTimeout(async ()=>{return await exec('ffmpeg -i randomblowjob.gif -pix_fmt yuv420p -vf "scale=trunc(iw/2)*2:trunc(ih/2)*2" ini.mp4 -y', (er) => {
@@ -2325,7 +2325,7 @@ event.on('chat-update', async(msg) =>{
             printLogs(msg)
         } else if (cmd == "randomkiss") {
             if (!modecmd(sender)) return
-            const response = await requests("http://hujanapi.xyz/api/randomkiss?apikey=" + nwhrYGIgbI1UM2E)
+            const response = await requests("http://hujanapi.xyz/api/randomkiss?apikey=" + APIKUY)
             const data = await response.json()
             await wa.downloadFile(data.url, "./randomkiss.gif")
             setTimeout(async ()=>{return await exec('ffmpeg -i randomkiss.gif -pix_fmt yuv420p -vf "scale=trunc(iw/2)*2:trunc(ih/2)*2" ini.mp4 -y', (er) => {
@@ -2337,7 +2337,7 @@ event.on('chat-update', async(msg) =>{
             printLogs(msg)
         } else if (cmd == "randomhug") {
             if (!modecmd(sender)) return
-            const response = await requests("http://hujanapi.xyz/api/randomhug?apikey=" + nwhrYGIgbI1UM2E)
+            const response = await requests("http://hujanapi.xyz/api/randomhug?apikey=" + APIKUY)
             const data = await response.json()
             await wa.downloadFile(data.url, "./randomhug.gif")
             setTimeout(async ()=>{return await exec('ffmpeg -i randomhug.gif -pix_fmt yuv420p -vf "scale=trunc(iw/2)*2:trunc(ih/2)*2" ini.mp4 -y', (er) => {
@@ -2349,7 +2349,7 @@ event.on('chat-update', async(msg) =>{
             printLogs(msg)
         } else if (cmd == "randomcry") {
             if (!modecmd(sender)) return
-            const response = await requests("http://hujanapi.xyz/api/randomcry?apikey=" + nwhrYGIgbI1UM2E)
+            const response = await requests("http://hujanapi.xyz/api/randomcry?apikey=" + APIKUY)
             const data = await response.json()
             await wa.downloadFile(data.url, "./randomcry.gif")
             setTimeout(async ()=>{return await exec('ffmpeg -i randomcry.gif -pix_fmt yuv420p -vf "scale=trunc(iw/2)*2:trunc(ih/2)*2" ini.mp4 -y', (er) => {
@@ -2361,13 +2361,13 @@ event.on('chat-update', async(msg) =>{
             printLogs(msg)
         } else if (cmd == "randomanime") {
             if (!modecmd(sender)) return
-            const response = await requests("http://hujanapi.xyz/api/randomanime?apikey=" + nwhrYGIgbI1UM2E)
+            const response = await requests("http://hujanapi.xyz/api/randomanime?apikey=" + APIKUY)
             const data = await response.json()
             wa.sendMediaURL(to, data.url, "*Your requests*")
             printLogs(msg)
         } else if (cmd == "randomwaifu") {
             if (!modecmd(sender)) return
-            const response = await requests("http://hujanapi.xyz/api/randomwaifu?apikey=" + nwhrYGIgbI1UM2E)
+            const response = await requests("http://hujanapi.xyz/api/randomwaifu?apikey=" + APIKUY)
             const data = await response.json()
             let fox = "*Nama :* " + data.result.name
             fox += "*\nDeskripsi :* " + data.result.description
